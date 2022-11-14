@@ -101,3 +101,9 @@ variable "image_pull_credentials_type" {
   description = "Type of credentials AWS CodeBuild uses to pull images in your build. For cross account: use SERVICE_ROLE"
   default     = "CODEBUILD"
 }
+
+variable "sqitch_ops_target" {
+  type        = "string"
+  description = "The default value for database sqitch deployment's target"
+  default     = "HEAD"
+}

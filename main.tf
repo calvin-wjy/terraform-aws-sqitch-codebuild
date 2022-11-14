@@ -22,10 +22,10 @@ resource "aws_codebuild_project" "deploy_pipeline" {
   }
 
   environment {
-    compute_type    = "BUILD_GENERAL1_SMALL"
-    image           = "${var.codebuild_image}"
-    type            = "LINUX_CONTAINER"
-    privileged_mode = "${var.codebuild_privileged_mode}"
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = "${var.codebuild_image}"
+    type                        = "LINUX_CONTAINER"
+    privileged_mode             = "${var.codebuild_privileged_mode}"
     image_pull_credentials_type = "${var.image_pull_credentials_type}"
 
     environment_variable {
@@ -48,7 +48,7 @@ resource "aws_codebuild_project" "deploy_pipeline" {
 
     environment_variable {
       name  = "SQITCH_OPS_TARGET"
-      value = "HEAD"
+      value = "${var.sqitch_ops_target}"
       type  = "PLAINTEXT"
     }
 
@@ -58,12 +58,12 @@ resource "aws_codebuild_project" "deploy_pipeline" {
       type  = "PLAINTEXT"
     }
 
-    dynamic "environment_variable" { 
+    dynamic "environment_variable" {
       for_each = var.environment_variables
       content {
-        name = environment_variable.value["name"]
+        name  = environment_variable.value["name"]
         value = environment_variable.value["value"]
-        type = environment_variable.value["type"]
+        type  = environment_variable.value["type"]
       }
     }
   }
